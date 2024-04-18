@@ -6,5 +6,5 @@ __pycache__/
 *.pyc
 
 # Ignore specific folders within the models/storm directory
-models/storm/ckpt/
-models/storm/runs/
+storm/ckpt
+storm/runs
