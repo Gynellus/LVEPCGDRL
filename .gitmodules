@@ -1,6 +1,3 @@
-[submodule "models/bigger_better_faster"]
-	path = models/bigger_better_faster
-	url = https://github.com/google-research/google-research.git
 [submodule "models/storm"]
 	path = models/storm
 	url = https://github.com/weipu-zhang/STORM.git

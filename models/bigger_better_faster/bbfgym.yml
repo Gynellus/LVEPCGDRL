@@ -1,4 +1,0 @@
-name: superbbfgym
-channels:
-  - defaults
-prefix: /home/guido/miniconda3/envs/superbbfgym
