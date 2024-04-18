@@ -1,0 +1,10 @@
+# Ignore Visual Studio Code folder
+.vscode/
+
+# Ignore Python compiled files and __pycache__ directories
+__pycache__/
+*.pyc
+
+# Ignore specific folders within the models/storm directory
+models/storm/ckpt/
+models/storm/runs/

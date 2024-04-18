@@ -1,0 +1,14 @@
+torch==2.2.1+cu121
+torchaudio
+torchvision
+yacs
+tensorboardX
+tensorboard
+moviepy
+colorama
+einops
+tqdm
+opencv-python
+gymnasium[atari,accept-rom-license]
+# cudnn = 8.9.2
+# CUDA = 12.1
