@@ -29,22 +29,15 @@ import gym_super_mario_bros
 from gym_super_mario_bros import JoypadSpace
 from gym_super_mario_bros.actions import SIMPLE_MOVEMENT, COMPLEX_MOVEMENT
 
-# env = gym_super_mario_bros.make('SuperMarioBros-v3')
-# env = JoypadSpace(env, SIMPLE_MOVEMENT)
 
-# gymnasium.register(
-#     id='SuperMarioBros-v3',
-#     entry_point='gym_super_mario_bros:SuperMarioBrosEnv'
-# )
-
-def process_visualize(img):
-    img = img.astype('uint8')
-    img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-    img = cv2.resize(img, (640, 640))
-    return img
+# def process_visualize(img):
+#     img = img.astype('uint8')
+#     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+#     img = cv2.resize(img, (640, 640))
+#     return img
 
 def build_single_env(env_name, image_size, seed):
-    env = gym_super_mario_bros.make(env_name, rom_mode='vanilla')
+    env = gym_super_mario_bros.make(env_name, rom_mode='vanilla', render_mode='human')
     if 'SuperMarioBros' in env_name :
         env = JoypadSpace(env, COMPLEX_MOVEMENT)
     env = env_wrapper.SeedEnvWrapper(env, seed=seed)
@@ -140,8 +133,8 @@ def joint_train_world_model_agent(env_name, max_steps, num_envs, image_size,
             action = vec_env.action_space.sample()
 
         obs, reward, done, truncated, info = vec_env.step(action)
-        cv2.imshow("current_obs", process_visualize(obs[0]))
-        cv2.waitKey(10)
+        # cv2.imshow("current_obs", process_visualize(obs[0]))
+        # cv2.waitKey(10)
         replay_buffer.append(current_obs, action, reward, np.logical_or(done, info["life_loss"]))
 
         done_flag = np.logical_or(done, truncated)
