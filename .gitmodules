@@ -1,3 +1,0 @@
-[submodule "models/storm"]
-	path = models/storm
-	url = https://github.com/weipu-zhang/STORM.git
