@@ -16,6 +16,5 @@ for step in range(5000):
     if terminated:
         observation = env.reset()
     observation, reward, terminated, truncated, info = env.step(env.action_space.sample())
-    # env.render()
 
 env.close()

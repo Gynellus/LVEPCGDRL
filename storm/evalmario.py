@@ -37,7 +37,7 @@ def process_visualize(img):
 
 
 def build_single_env(env_name, image_size, seed=None):
-    env = gym_super_mario_bros.make(env_name)
+    env = gym_super_mario_bros.make(env_name, rom_mode='vanilla', render_mode='human')
     if 'SuperMarioBros' in env_name :
         env = JoypadSpace(env, COMPLEX_MOVEMENT)
     env = env_wrapper.SeedEnvWrapper(env, seed=seed)
@@ -89,8 +89,8 @@ def eval_episodes(num_episode, env_name, max_steps, num_envs, image_size,
         context_action.append(action)
 
         obs, reward, done, truncated, info = vec_env.step(action)
-        cv2.imshow("current_obs", process_visualize(obs[0]))
-        cv2.waitKey(10)
+        # cv2.imshow("current_obs", process_visualize(obs[0]))
+        # cv2.waitKey(10)
 
         done_flag = np.logical_or(done, truncated)
         if done_flag.any():

@@ -5,6 +5,11 @@
 __pycache__/
 *.pyc
 
-# Ignore specific folders within the models/storm directory
+# Ignore specific folders within the torm directory
 storm/ckpt
 storm/runs
+storm/eval_result
+
+# Ignore specific files within the stable_baselines directory
+*_tensorboard
+*.zip

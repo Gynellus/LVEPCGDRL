@@ -37,7 +37,7 @@ from gym_super_mario_bros.actions import SIMPLE_MOVEMENT, COMPLEX_MOVEMENT
 #     return img
 
 def build_single_env(env_name, image_size, seed):
-    env = gym_super_mario_bros.make(env_name, rom_mode='vanilla', render_mode='human')
+    env = gym_super_mario_bros.make(env_name, rom_mode='vanilla', render_mode='rgb_array')
     if 'SuperMarioBros' in env_name :
         env = JoypadSpace(env, COMPLEX_MOVEMENT)
     env = env_wrapper.SeedEnvWrapper(env, seed=seed)
