@@ -34,7 +34,7 @@ model = PPO("CnnPolicy", env, verbose=1, ent_coef=0.01, tensorboard_log="./ppo_s
 # # Train the model. You can adjust the total_timesteps based on how long you're willing to train and the computational resources you have.
 try:
     while True:
-        model.learn(total_timesteps=20490, progress_bar=True, log_interval=1)
+        model.learn(total_timesteps=20480, progress_bar=True, log_interval=1)
         model.save(model_path)
 except KeyboardInterrupt:
     model.save(model_path)
