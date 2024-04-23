@@ -30,11 +30,13 @@ from gym_super_mario_bros import JoypadSpace
 from gym_super_mario_bros.actions import SIMPLE_MOVEMENT, COMPLEX_MOVEMENT
 
 
-# def process_visualize(img):
-#     img = img.astype('uint8')
-#     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-#     img = cv2.resize(img, (640, 640))
-#     return img
+os.environ['PYOPENGL_PLATFORM'] = 'egl'
+
+def process_visualize(img):
+    img = img.astype('uint8')
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+    img = cv2.resize(img, (640, 640))
+    return img
 
 def build_single_env(env_name, image_size, seed):
     env = gym_super_mario_bros.make(env_name, rom_mode='vanilla', render_mode='rgb_array')
