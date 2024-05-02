@@ -1,6 +1,6 @@
-env_name=SuperMarioBros-v3
+env_name=SuperMarioBrosProgressiveStages-v3
 python -u trainmario.py \
-    -n "${env_name}-life_done-wm_2L512D8H-100k-seed1" \
+    -n "${env_name}-run2-fromScratch" \
     -seed 1 \
     -config_path "config_files/STORM.yaml" \
     -env_name "${env_name}" \

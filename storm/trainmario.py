@@ -29,9 +29,6 @@ import gym_super_mario_bros
 from gym_super_mario_bros import JoypadSpace
 from gym_super_mario_bros.actions import SIMPLE_MOVEMENT, COMPLEX_MOVEMENT
 
-
-os.environ['PYOPENGL_PLATFORM'] = 'egl'
-
 def process_visualize(img):
     img = img.astype('uint8')
     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
@@ -39,7 +36,7 @@ def process_visualize(img):
     return img
 
 def build_single_env(env_name, image_size, seed):
-    env = gym_super_mario_bros.make(env_name, rom_mode='vanilla', render_mode='rgb_array')
+    env = gym_super_mario_bros.make(env_name, rom_mode='vanilla', render_mode='human')
     if 'SuperMarioBros' in env_name :
         env = JoypadSpace(env, COMPLEX_MOVEMENT)
     env = env_wrapper.SeedEnvWrapper(env, seed=seed)
@@ -260,6 +257,20 @@ if __name__ == "__main__":
         # build world model and agent
         world_model = build_world_model(conf, action_dim)
         agent = build_agent(conf, action_dim)
+
+        if False: # Set to false to start from scratch
+            # load pretrained model
+            import glob
+            root_path = f"ckpt/SuperMarioBros-v3-life_done-wm_2L512D8H-100k-seed1"
+            pathes = glob.glob(f"{root_path}/world_model_*.pth")
+            steps = [int(path.split("_")[-1].split(".")[0]) for path in pathes]
+            steps.sort()
+            steps = steps[-1:]
+            print(steps)
+            for step in tqdm(steps):
+                world_model.load_state_dict(torch.load(f"{root_path}/world_model_{step}.pth"))
+                agent.load_state_dict(torch.load(f"{root_path}/agent_{step}.pth"))
+                print("Loaded models")
 
         # build replay buffer
         replay_buffer = ReplayBuffer(

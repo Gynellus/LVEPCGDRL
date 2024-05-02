@@ -36,7 +36,7 @@ def process_visualize(img):
 
 
 def build_single_env(env_name, image_size, seed=None):
-    env = gym_super_mario_bros.make(env_name, rom_mode='vanilla', render_mode='rgb_array')
+    env = gym_super_mario_bros.make(env_name, rom_mode='vanilla', render_mode='human')
     if 'SuperMarioBros' in env_name :
         env = JoypadSpace(env, COMPLEX_MOVEMENT)
     env = env_wrapper.SeedEnvWrapper(env, seed=seed)
@@ -51,7 +51,7 @@ def build_vec_env(env_name, image_size, num_envs, seed=None):
     def lambda_generator(env_name, image_size):
         return lambda: build_single_env(env_name, image_size, seed)
     env_fns = []
-    env_fns = [lambda_generator(env_name, image_size) for i in range(num_envs)]
+    env_fns = [lambda_generator(env_name, image_size)]
     vec_env = gymnasium.vector.AsyncVectorEnv(env_fns=env_fns)
     return vec_env
 
@@ -66,7 +66,7 @@ def eval_episodes(num_episode, env_name, max_steps, num_envs, image_size,
     current_obs, current_info = vec_env.reset()
     context_obs = deque(maxlen=16)
     context_action = deque(maxlen=16)
-
+    current_stage = (int(current_info['world']), int(current_info['stage']))
     final_rewards = []
     # for total_steps in tqdm(range(max_steps//num_envs)):
     while True:
@@ -88,8 +88,6 @@ def eval_episodes(num_episode, env_name, max_steps, num_envs, image_size,
         context_action.append(action)
 
         obs, reward, done, truncated, info = vec_env.step(action)
-        cv2.imshow("current_obs", process_visualize(obs[0]))
-        cv2.waitKey(10)
 
         done_flag = np.logical_or(done, truncated)
         if done_flag.any():
@@ -141,16 +139,17 @@ if __name__ == "__main__":
     steps = [int(path.split("_")[-1].split(".")[0]) for path in pathes]
     steps.sort()
     steps = steps[-1:]
-    print(steps)
     results = []
     for step in tqdm(steps):
+        print(step)
         world_model.load_state_dict(torch.load(f"{root_path}/world_model_{step}.pth"))
         agent.load_state_dict(torch.load(f"{root_path}/agent_{step}.pth"))
+        print("Loaded models")
         # # eval
         episode_avg_return = eval_episodes(
             num_episode=20,
             env_name=args.env_name,
-            num_envs=5,
+            num_envs=1,
             max_steps=conf.JointTrainAgent.SampleMaxSteps,
             image_size=conf.BasicSettings.ImageSize,
             world_model=world_model,

@@ -4,13 +4,21 @@ from gym_super_mario_bros.actions import COMPLEX_MOVEMENT
 import env_wrapper
 import gymnasium
 
-env = gym_super_mario_bros.make('SuperMarioBros-v0', render_mode='rgb_array') # full_action_space=False, frameskip=1
-env = JoypadSpace(env, COMPLEX_MOVEMENT)
-env = env_wrapper.SeedEnvWrapper(env, seed=None)
-env = env_wrapper.MaxLast2FrameSkipWrapper(env, skip=4)
-env = gymnasium.wrappers.ResizeObservation(env, shape=128)
-env = env_wrapper.LifeLossInfo(env)
+# build a single environment
+def build_single_env(env_name='SuperMarioBros-1-2-v3', rom_mode = "vanilla", seed=None):
+    env = gym_super_mario_bros.make(env_name, rom_mode, render_mode='human') # full_action_space=False, frameskip=1
+    env = JoypadSpace(env, COMPLEX_MOVEMENT)
+    env = env_wrapper.SeedEnvWrapper(env, seed=None)
+    env = env_wrapper.MaxLast2FrameSkipWrapper(env, skip=4)
+    env = gymnasium.wrappers.ResizeObservation(env, shape=128)
+    env = env_wrapper.LifeLossInfo(env)
+    return env
 
+# build a vectorized environment
+# env = gymnasium.vector.AsyncVectorEnv(env_fns=[build_single_env])
+env = build_single_env()
+
+print("wrappery wrapper")
 terminated = True
 for step in range(5000):
     if terminated:

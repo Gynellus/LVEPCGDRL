@@ -1,6 +1,6 @@
 from gym_super_mario_bros import JoypadSpace
 import gym_super_mario_bros
-from gym_super_mario_bros.actions import SIMPLE_MOVEMENT
+from gym_super_mario_bros.actions import SIMPLE_MOVEMENT, RIGHT_ONLY
 import stable_baselines3.common
 import stable_baselines3.common.env_checker
 import env_wrapper
@@ -13,11 +13,11 @@ from stable_baselines3.common.evaluation import evaluate_policy
 import os
 import cv2
 
-env = gym_super_mario_bros.make('SuperMarioBros-v3', render_mode='human') # full_action_space=False, frameskip=1
+env = gym_super_mario_bros.make('SuperMarioBrosProgressiveStages-v3', rom_mode = 'vanilla', render_mode='human') # full_action_space=False, frameskip=1
 env = JoypadSpace(env, SIMPLE_MOVEMENT)
 env = env_wrapper.SeedEnvWrapper(env, seed=None)
 env = env_wrapper.MaxLast2FrameSkipWrapper(env, skip=4)
-env = gymnasium.wrappers.ResizeObservation(env, shape=128)
+env = gymnasium.wrappers.ResizeObservation(env, shape=64)
 env = env_wrapper.LifeLossInfo(env)
 stable_baselines3.common.env_checker.check_env(env)
 

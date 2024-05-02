@@ -1,5 +1,5 @@
-env_name=SuperMarioBros-v3
+env_name=SuperMarioBrosProgressiveStages-v3
 python -u evalmario.py \
     -env_name "${env_name}" \
-    -run_name "${env_name}-life_done-wm_2L512D8H-100k-seed1"\
+    -run_name "${env_name}-run1-fromScratch"\
     -config_path "config_files/STORM.yaml" 
