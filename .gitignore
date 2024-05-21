@@ -13,3 +13,7 @@ storm/eval_result
 # Ignore specific files within the stable_baselines directory
 *_tensorboard
 *.zip
+
+cma-es/
+toadgan/
+Mario-AI-Framework/

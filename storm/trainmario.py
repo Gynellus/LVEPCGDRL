@@ -258,16 +258,16 @@ if __name__ == "__main__":
         world_model = build_world_model(conf, action_dim)
         agent = build_agent(conf, action_dim)
 
-        if False: # Set to false to start from scratch
+        if True: # Set to false to start from scratch
             # load pretrained model
             import glob
-            root_path = f"ckpt/SuperMarioBros-v3-life_done-wm_2L512D8H-100k-seed1"
+            root_path = f"ckpt/SuperMarioBrosProgressiveStages-v3-run2-fromScratch"
             pathes = glob.glob(f"{root_path}/world_model_*.pth")
             steps = [int(path.split("_")[-1].split(".")[0]) for path in pathes]
             steps.sort()
             steps = steps[-1:]
-            print(steps)
-            for step in tqdm(steps):
+            for step in tqdm((75000,)):
+                print(step)
                 world_model.load_state_dict(torch.load(f"{root_path}/world_model_{step}.pth"))
                 agent.load_state_dict(torch.load(f"{root_path}/agent_{step}.pth"))
                 print("Loaded models")

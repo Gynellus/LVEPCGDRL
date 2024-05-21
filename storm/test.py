@@ -5,7 +5,7 @@ import env_wrapper
 import gymnasium
 
 # build a single environment
-def build_single_env(env_name='SuperMarioBros-1-2-v3', rom_mode = "vanilla", seed=None):
+def build_single_env(env_name='SuperMarioBros-v3', rom_mode = "vanilla", seed=None):
     env = gym_super_mario_bros.make(env_name, rom_mode, render_mode='human') # full_action_space=False, frameskip=1
     env = JoypadSpace(env, COMPLEX_MOVEMENT)
     env = env_wrapper.SeedEnvWrapper(env, seed=None)
@@ -18,7 +18,6 @@ def build_single_env(env_name='SuperMarioBros-1-2-v3', rom_mode = "vanilla", see
 # env = gymnasium.vector.AsyncVectorEnv(env_fns=[build_single_env])
 env = build_single_env()
 
-print("wrappery wrapper")
 terminated = True
 for step in range(5000):
     if terminated:

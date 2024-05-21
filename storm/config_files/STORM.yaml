@@ -35,4 +35,4 @@ Models:
     HiddenDim: 512
     Gamma: 0.985
     Lambda: 0.95
-    EntropyCoef: 3E-4
+    EntropyCoef: 3E-2
